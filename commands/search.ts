@@ -30,15 +30,15 @@ export default {
     try{
       
       const {options} = interaction
-      const songName = encodeURIComponent( options.getString("song")!)
-      const artistName = encodeURIComponent(options.getString("singer")!)
+      const songName =  options.getString("song")!
+      const artistName = options.getString("singer")!
       
       if(songName === "" || artistName === ""){
         return ""
       }
       
-      let searchOpts = {...initOptions, url: initOptions.url + artistName + "/"+ songName}
-      //console.log(searchOpts)
+      let searchOpts = {...initOptions, url: initOptions.url + encodeURIComponent(artistName) + "/"+ encodeURIComponent(songName)}
+      console.log(searchOpts)
       let resp = await axios.request(searchOpts)
       //console.log(resp.data)
       const lyrics = resp.data.lyrics
@@ -52,7 +52,7 @@ export default {
       return embedMsg
     }catch (err){
       console.log(err)
-      return 
+      return "No Lyrics where Found"
     }
     
   }
