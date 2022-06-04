@@ -3,6 +3,8 @@ import WOKcommands from 'wokcommands'
 import dotenv from 'dotenv'
 import path from 'path'
 
+
+
 dotenv.config()
 
 const client = new DiscordJs.Client({
@@ -29,4 +31,3 @@ client.on("ready", () =>{
 })
 
 client.login(process.env["TOKEN"])
-const mySecret = process.env['TOKEN']
