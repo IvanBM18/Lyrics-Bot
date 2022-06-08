@@ -1,5 +1,5 @@
-import { ICommand } from "wokcommands";
 import { Constants, MessageEmbed } from "discord.js";
+import { ICommand } from "wokcommands";
 import axios from "axios"
 
 
@@ -38,7 +38,7 @@ export default {
       }
       
       let searchOpts = {...initOptions, url: initOptions.url + encodeURIComponent(artistName) + "/"+ encodeURIComponent(songName)}
-      console.log(searchOpts)
+      //console.log(searchOpts)
       let resp = await axios.request(searchOpts)
       //console.log(resp.data)
       const lyrics = resp.data.lyrics
