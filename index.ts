@@ -5,22 +5,27 @@ import path from 'path'
 
 console.log("-----Loading Bot----")
 dotenv.config()
-//Return embed msg with, link to spotify, Portrait Artist Name
-//Song Title
-
-//OTgyMzUyNTU3NzQ3ODY3Njg5.G9kDND.j3VzoUHPq0RCZbiZdRYg_C37rX_X8g9klP7j8o
 
 //APIS
-//Genius API HJP TAN MAS DIFICIL AAAA
-//AzLyric (Most songs)
-//SpotLyrics
-//Elyrics.net
+//Genius TAN MAS DIFICIL AAAA
+
 
 //Known Bugs
 //If song mispelled, search fails
 //The weeknd doesn´t appear
 //Songs that use accento dont appear
 //Search for otheer ways to get the lyrics
+
+
+//TO DO
+//Eliminar primera linea from lyrics
+//Get Data From Genius
+//Button Interaction collector
+//Buttons change Page
+//Fix Specified Search
+//Add links to the embedMessage
+//Global Search
+
 const client = new DiscordJs.Client({
     intents:[
         Intents.FLAGS.DIRECT_MESSAGES,
