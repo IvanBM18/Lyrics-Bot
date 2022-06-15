@@ -12,16 +12,16 @@ export default {
   category:"Search",
   description:"Given arguments realizes a search",
   testOnly:true,
-  slash:"both",
+  slash:true,
   options:[
    {
-    name: 'song',
+    name: 'Song',
     description:"Song's Title",
     required: true,
     type: Constants.ApplicationCommandOptionTypes.STRING
   }, 
   {
-    name: 'singer',
+    name: 'Artist',
     description:"Song's Artist/Singer",
     required: true,
     type: Constants.ApplicationCommandOptionTypes.STRING

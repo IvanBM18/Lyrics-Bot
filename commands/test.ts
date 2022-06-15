@@ -8,7 +8,11 @@ import * as cheerio from 'cheerio';
 
 const testURL = "https://genius.com/Los-mesoneros-el-paraiso-lyrics"
 const baseURL = "https://api.genius.com/search?q="
-const acces = process.env["ACCES_TOKEN"]
+const accessHeaders = {
+    headers: {
+      Authorization: `Bearer ${process.env.ACCES_TOKEN}`,
+    },
+  } 
 export default {
   category:"Testing",
   description:"Testing API's and things",
@@ -17,9 +21,15 @@ export default {
   
   
   callback: async ({message,text,channel,interaction}) =>{
+    console.log("[Test Comand Called]")
+
     if(interaction != undefined){
       interaction.reply("Search Done!")
     }
+    if(text == ""){
+      return "No Arguments Given"
+    }
+    const params = formatText(text)
     let res = await axios.get(testURL)
     let data = res.data
     
@@ -39,7 +49,7 @@ export default {
     const embedMsg = new MessageEmbed()
         .setTitle("El Paraiso")
         .setColor("DARK_BLUE")
-        .setDescription(lyrics + "\n" + formatSearch(text))
+        .setDescription(lyrics + "\n" + formatText(text))
         .setFooter("Los Mesoneros") .setImage("https://images.genius.com/89d7f06ec29cb66d5bc0ca9ec30ae9e1.640x640x1.jpg")
 
     if(message?.channel){
@@ -65,6 +75,16 @@ const formatLyrics = (lyrics : string) =>{
   return formatedLyrics
 }
 
-const formatSearch = (search : string) =>{
+const formatText = (search : string) =>{
   return encodeURIComponent(search)
 }
+
+const getData = async (url: string) => {
+  let res = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${process.env["ACCES_TOKEN"]}`,
+    },
+  });
+  res = res.data.response.hits[0]
+  console.log(res)
+};

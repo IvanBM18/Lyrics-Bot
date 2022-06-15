@@ -18,13 +18,11 @@ dotenv.config()
 
 
 //TO DO
-//Eliminar primera linea from lyrics
-//Get Data From Genius
-//Button Interaction collector
 //Buttons change Page
 //Fix Specified Search
 //Add links to the embedMessage
-//Global Search
+//Button Interaction collector
+//Pagination
 
 const client = new DiscordJs.Client({
     intents:[
@@ -47,7 +45,7 @@ client.on("ready", () =>{
     new WOKcommands(client, {
         commandsDir: path.join(__dirname, 'commands'),
         typeScript:true,
-        testServers: [guildId]
+        testServers: [guildId, "664663736275042325"]
     })
     .setDefaultPrefix("=");
     console.log("-----Commands Loaded----");
