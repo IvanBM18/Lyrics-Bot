@@ -9,32 +9,35 @@ const initOptions = {
 };
 
 export default {
+  name:"search",
   category:"Search",
-  description:"Given arguments realizes a search",
+  description:"Alternative Search: Given arguments realizes a search",
   testOnly:true,
   slash:true,
   options:[
    {
-    name: 'Song',
+    name: 'song',
     description:"Song's Title",
     required: true,
     type: Constants.ApplicationCommandOptionTypes.STRING
   }, 
   {
-    name: 'Artist',
+    name: 'artist',
     description:"Song's Artist/Singer",
     required: true,
     type: Constants.ApplicationCommandOptionTypes.STRING
   }],
   callback: async ({message,text ,interaction}) =>{
+    console.log("[AlterSearch Comand Called]")
+    return "Command No longer available"
     try{
       
       const {options} = interaction
       const songName =  options.getString("song")!
-      const artistName = options.getString("singer")!
+      const artistName = options.getString("artist")!
       
       if(songName === "" || artistName === ""){
-        return ""
+        return "[ERROR]"
       }
       
       let searchOpts = {...initOptions, url: initOptions.url + encodeURIComponent(artistName) + "/"+ encodeURIComponent(songName)}
@@ -42,14 +45,16 @@ export default {
       let resp = await axios.request(searchOpts)
       //console.log(resp.data)
       const lyrics = resp.data.lyrics
-      
+      console.log(lyrics)
       const embedMsg = new MessageEmbed()
         .setTitle(songName!)
         .setColor("DARK_BLUE")
         .setDescription(lyrics)
         .setFooter(artistName!)
-  
-      return embedMsg
+      
+      message.reply({
+        embeds:[embedMsg]
+      })
     }catch (err){
       console.log(err)
       return "No Lyrics where Found"

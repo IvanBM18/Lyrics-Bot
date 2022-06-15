@@ -18,10 +18,11 @@ dotenv.config()
 
 
 //TO DO
-//Buttons change Page
-//Fix Specified Search
+//search works both on / and =
 //Add links to the embedMessage
+//Alternate Method to get the lyrics
 //Button Interaction collector
+//Buttons change Page
 //Pagination
 
 const client = new DiscordJs.Client({
