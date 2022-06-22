@@ -11,14 +11,14 @@ dotenv.config()
 
 
 //Known Bugs
-//If song mispelled, search fails
-//The weeknd doesn´t appear
-//Songs that use accento dont appear
+//1. No se puede buscar una canción que no existe
+//2. Te veo Lasso, investigar por que no sale toda la letra
 //Search for otheer ways to get the lyrics
 
 
 //TO DO
 //search works both on / and =
+//Upload to heroku
 //Add links to the embedMessage
 //Alternate Method to get the lyrics
 //Button Interaction collector

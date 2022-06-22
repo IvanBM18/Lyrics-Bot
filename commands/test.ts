@@ -21,7 +21,7 @@ export default {
   
   
   callback: async ({message,text,channel,interaction}) =>{
-    console.log("[Test Comand Called]")
+    console.log("[Test Command Called]")
 
     if(interaction != undefined){
       interaction.reply("Search Done!")

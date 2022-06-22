@@ -15,7 +15,7 @@ export default {
   testOnly:true,
   slash:true,
   options:[
-   {
+  {
     name: 'song',
     description:"Song's Title",
     required: true,

@@ -13,37 +13,36 @@ const accessHeaders = {
     },
   } 
 export default {
-  name:"lyrics",
-  aliases: ['l','s'],
+  name:"search",
   category:"Search",
-  description:"Open Search",
+  description:"Open Slash Search",
   testOnly:true,
-  slash:false,
+  slash:true,
   // cooldown: '5s',
-  // options:[{
-  //   name: 'search',
-  //   description:"Term to search for",
-  //   required: true,
-  //   type: Constants.ApplicationCommandOptionTypes.STRING
-  // }],
+  options:[{
+    name: 'search',
+    description:"Term to search for",
+    required: true,
+    type: Constants.ApplicationCommandOptionTypes.STRING
+  }],
   error:( () => {
     return "[ERROR] Open Search Command Error]"
   }),
   
-  callback: async ({message,text,channel}) =>{
+  callback: async ({message,text,channel,interaction}) =>{
     console.log("[Search Command Called]")
-    // let flag = true
-    // // if(interaction == undefined){
-    // //   interaction.reply("Search Done!")
-    // // }
-    // if(interaction != undefined){
-    //   const {options} = interaction
-    //   var params  =  formatText(options.getString("search")!)
-    //   flag = false
+    let flag = true
+    // if(interaction == undefined){
+    //   interaction.reply("Search Done!")
     // }
+    if(interaction != undefined){
+      const {options} = interaction
+      var params  =  formatText(options.getString("search")!)
+      flag = false
+    }
     if(text == "" || text == undefined){
       return "No Arguments Given"
-    }else {
+    }else if(flag){
       // console.log("On reply")
       var params = formatText(text)
       message.reply({
@@ -63,8 +62,9 @@ export default {
     let res = await axios.get(data.url)
     let lyricsHtml = res.data
     const $ = cheerio.load(lyricsHtml)
-    let lyrics = $("#lyrics-root").find("div").toString();
+    let lyrics = $("#lyrics-root").find("div").first().toString();
     lyrics = formatLyrics(lyrics)
+    
     // const row = new MessageActionRow()
     //   .addComponents(
     //     new MessageButton()
@@ -75,13 +75,11 @@ export default {
     //   )
     
     //console.log(data)
-    
     const embedMsg = new MessageEmbed()
         .setTitle(data.title)
         .setColor("DARK_BLUE")
         .setDescription(lyrics)
-        .setImage(data.song_art_image_url || "")
-        //.setFooter(data.artist_names)
+        .setFooter(data.artist_names) .setImage(data.song_art_image_url || "")
     if(message?.channel){
       message.channel.send({
         embeds:[embedMsg],
