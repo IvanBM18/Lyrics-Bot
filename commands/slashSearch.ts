@@ -31,10 +31,7 @@ export default {
   }),
   
   callback: async ({message,channel,interaction}) =>{
-    console.log("[Search Command Called]")
-    // if(interaction == undefined){
-    //   interaction.reply("Search Done!")
-    // }
+    console.log("[Slash Search Command Called]")
     if(interaction != undefined){
       const {options} = interaction
       var params  =  formatText(options.getString("search")!)
@@ -60,7 +57,7 @@ export default {
     let res = await axios.get(data.url)
     let lyricsHtml = res.data
     const $ = cheerio.load(lyricsHtml)
-    let lyrics = $("#lyrics-root").find("div").toString();
+    let lyrics = $("#lyrics-root").find('div[data-lyrics-container*="true"]').toString();
     lyrics = formatLyrics(lyrics)
     
     // const row = new MessageActionRow()
@@ -95,7 +92,7 @@ export default {
 const formatLyrics = (lyrics : string) =>{
   lyrics = lyrics.replace(/<br>/g, "\n");
   lyrics = lyrics.replace(/(<([^>]+)>)/ig, '');
-  lyrics = lyrics.replace(/embed/ig,'')
+  // lyrics = lyrics.replace(/embed/ig,'')
   return lyrics
 }
 

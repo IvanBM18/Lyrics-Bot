@@ -4,6 +4,7 @@ import { Constants, MessageEmbed, MessageActionRow, MessageButton, Message  } fr
 import axios from "axios"
 import * as cheerio from 'cheerio';
 import ISong from "../models/SongModel";
+import fs from "fs";
 
 
 const baseURL = "https://api.genius.com/"
@@ -32,15 +33,7 @@ export default {
   
   callback: async ({message,text,channel}) =>{
     console.log("[Search Command Called]")
-    // let flag = true
-    // // if(interaction == undefined){
-    // //   interaction.reply("Search Done!")
-    // // }
-    // if(interaction != undefined){
-    //   const {options} = interaction
-    //   var params  =  formatText(options.getString("search")!)
-    //   flag = false
-    // }
+
     if(text == "" || text == undefined){
       return "No Arguments Given"
     }else {
@@ -66,7 +59,8 @@ export default {
     let res = await axios.get(data.url)
     let lyricsHtml = res.data
     const $ = cheerio.load(lyricsHtml)
-    let lyrics = $("#lyrics-root").find("div").toString();
+    let lyrics = $("#lyrics-root").find('div[data-lyrics-container*="true"]').toString()
+    // fs.writeFileSync("lyrics.html", lyrics);
     lyrics = formatLyrics(lyrics)
     // const row = new MessageActionRow()
     //   .addComponents(
@@ -102,7 +96,7 @@ export default {
 const formatLyrics = (lyrics : string) =>{
   lyrics = lyrics.replace(/<br>/g, "\n");
   lyrics = lyrics.replace(/(<([^>]+)>)/ig, '');
-  lyrics = lyrics.replace(/Embed/ig,'')
+  // lyrics = lyrics.replace(/Embed/ig,'')
   return lyrics
 }
 

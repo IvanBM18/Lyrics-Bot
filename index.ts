@@ -16,9 +16,10 @@ dotenv.config()
 
 
 //TO DO
-//Fix remove content at the end of lyrics
+//Optimize cheerio search(try SOLO )
 //Add links to the embedMessage
 //Alternate Method to get the lyrics
+//Delete Searching... on response
 //Button Interaction collector
 //Buttons change Page
 //Pagination
