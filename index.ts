@@ -11,14 +11,12 @@ dotenv.config()
 
 
 //Known Bugs
-//1. No se puede buscar una canción que no existe
-//2. Te veo Lasso, investigar por que no sale toda la letra
+//1. Al final de cada letra aparece texto random
 //Search for otheer ways to get the lyrics
 
 
 //TO DO
-//search works both on / and =
-//Upload to heroku
+//Fix remove content at the end of lyrics
 //Add links to the embedMessage
 //Alternate Method to get the lyrics
 //Button Interaction collector
@@ -37,7 +35,6 @@ const client = new DiscordJs.Client({
     failIfNotExists:false,
     
 })
-
 
 
 client.on("ready", () =>{

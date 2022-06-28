@@ -14,6 +14,7 @@ const accessHeaders = {
   } 
 export default {
   name:"search",
+  aliases:["search"],
   category:"Search",
   description:"Open Slash Search",
   testOnly:true,
@@ -29,27 +30,24 @@ export default {
     return "[ERROR] Open Search Command Error]"
   }),
   
-  callback: async ({message,text,channel,interaction}) =>{
+  callback: async ({message,channel,interaction}) =>{
     console.log("[Search Command Called]")
-    let flag = true
     // if(interaction == undefined){
     //   interaction.reply("Search Done!")
     // }
     if(interaction != undefined){
       const {options} = interaction
       var params  =  formatText(options.getString("search")!)
-      flag = false
+      interaction.reply("Searching...")
+      // message.reply({
+      //   content: "Searching. . .",
+      // })
     }
-    if(text == "" || text == undefined){
-      return "No Arguments Given"
-    }else if(flag){
-      // console.log("On reply")
-      var params = formatText(text)
-      message.reply({
-        content: "Searching. . .",
-      })
-    }
+    
     let data = await getData(baseURL + "search?q=" +params!) as ISong
+    if(data == undefined){
+      return "Lyrics not found"
+    }
     // console.log(data)
     // console.log(data.url)
     // console.log(data.lyrics_state)
@@ -62,7 +60,7 @@ export default {
     let res = await axios.get(data.url)
     let lyricsHtml = res.data
     const $ = cheerio.load(lyricsHtml)
-    let lyrics = $("#lyrics-root").find("div").first().toString();
+    let lyrics = $("#lyrics-root").find("div").toString();
     lyrics = formatLyrics(lyrics)
     
     // const row = new MessageActionRow()
@@ -97,6 +95,7 @@ export default {
 const formatLyrics = (lyrics : string) =>{
   lyrics = lyrics.replace(/<br>/g, "\n");
   lyrics = lyrics.replace(/(<([^>]+)>)/ig, '');
+  lyrics = lyrics.replace(/embed/ig,'')
   return lyrics
 }
 
@@ -104,9 +103,14 @@ const formatText = (search : string) =>{
   return encodeURIComponent(search)
 }
 
-const getData = async (url: string) : Promise<ISong> => {
+const getData = async (url: string) : Promise<ISong | undefined> => {
   let res = await axios.get(url,accessHeaders);
-  let data = res.data.response.hits[0].result
+  let data;
+  try{
+    data = res.data.response.hits[0].result
+  }catch{
+    return undefined
+  }
   data = await axios.get(baseURL + "songs/" + data.id,accessHeaders)
   let rSong = data.data.response.song as ISong
   return rSong

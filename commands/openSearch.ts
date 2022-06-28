@@ -51,6 +51,9 @@ export default {
       })
     }
     let data = await getData(baseURL + "search?q=" +params!) as ISong
+    if(data == undefined){
+      return "Lyrics not found"
+    }
     // console.log(data)
     // console.log(data.url)
     // console.log(data.lyrics_state)
@@ -99,6 +102,7 @@ export default {
 const formatLyrics = (lyrics : string) =>{
   lyrics = lyrics.replace(/<br>/g, "\n");
   lyrics = lyrics.replace(/(<([^>]+)>)/ig, '');
+  lyrics = lyrics.replace(/Embed/ig,'')
   return lyrics
 }
 
@@ -106,9 +110,14 @@ const formatText = (search : string) =>{
   return encodeURIComponent(search)
 }
 
-const getData = async (url: string) : Promise<ISong> => {
+const getData = async (url: string) : Promise<ISong | undefined> => {
   let res = await axios.get(url,accessHeaders);
-  let data = res.data.response.hits[0].result
+  let data;
+  try{
+    data = res.data.response.hits[0].result
+  }catch{
+    return undefined
+  }
   data = await axios.get(baseURL + "songs/" + data.id,accessHeaders)
   let rSong = data.data.response.song as ISong
   return rSong
