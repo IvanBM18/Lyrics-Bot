@@ -18,9 +18,9 @@ export default {
   aliases: ['l','s'],
   category:"Search",
   description:"Open Search",
-  testOnly:true,
+  // testOnly:true,
   slash:false,
-  // cooldown: '5s',
+  cooldown: '3s',
   // options:[{
   //   name: 'search',
   //   description:"Term to search for",
