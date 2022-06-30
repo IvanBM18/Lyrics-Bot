@@ -11,18 +11,13 @@ dotenv.config()
 
 
 //Known Bugs
-//1. Al final de cada letra aparece texto random
 //Search for otheer ways to get the lyrics
 
 
 //TO DO
-//Optimize cheerio search(try SOLO )
-//Add links to the embedMessage
-//Alternate Method to get the lyrics
+//Optimize cheerio search(try SOLO ) Done!
 //Delete Searching... on response
-//Button Interaction collector
-//Buttons change Page
-//Pagination
+//Alternate Method to get the lyrics
 
 const client = new DiscordJs.Client({
     intents:[

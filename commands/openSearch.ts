@@ -1,5 +1,5 @@
 import { ICommand } from "wokcommands";
-import { Constants, MessageEmbed, MessageActionRow, MessageButton, Message  } from "discord.js";
+import { Constants, MessageEmbed, MessageFlags, MessageButton, Message  } from "discord.js";
 
 import axios from "axios"
 import * as cheerio from 'cheerio';
@@ -41,6 +41,8 @@ export default {
       var params = formatText(text)
       message.reply({
         content: "Searching. . .",
+        flags: [MessageFlags.FLAGS.EPHEMERAL],
+        
       })
     }
     let data = await getData(baseURL + "search?q=" +params!) as ISong
@@ -74,7 +76,7 @@ export default {
     //console.log(data)
     
     const embedMsg = new MessageEmbed()
-        .setTitle(data.title)
+        .setTitle(data.title + " - " + data.artist_names)
         .setColor("DARK_BLUE")
         .setDescription(lyrics)
         .setImage(data.song_art_image_url || "")
